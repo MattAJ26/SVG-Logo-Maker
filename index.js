@@ -1,23 +1,27 @@
 const inquirer = require('inquirer');
-const fs = require("fs");
+const fs = require('fs');
 const {Square, Circle, Triangle} = require('./lib/shapes');
+const path = require('path');
 
 function createLogo(response) {
-    let svgLogo;
+    let shapeInstance;
     switch(response.shape) {
         case 'Square':
-            svgLogo = new Square(response);
+            shapeInstance = new Square(response.shapeColor, response.text, response.textColor);
             break;
         case 'Circle':
-            svgLogo = new Circle(response);
+            shapeInstance = new Circle(response.shapeColor, response.text, response.textColor);
             break;
         case 'Triangle':
-            svgLogo = new Triangle(response);
+            shapeInstance = new Triangle(response.shapeColor, response.text, response.textColor);
             break;
         default:
             throw new Error("Unknown shape: " + response.shape);
     }
-    fs.writeFile('logo.svg', svgLogo, (err) => {
+    const svgLogo = shapeInstance.render();
+
+    const filePath = path.join(__dirname, 'logo.svg');
+        fs.writeFile(filePath, svgLogo, (err) => {
         if (err) {
             console.error("Error writing to file", err);
         } else {
@@ -32,12 +36,19 @@ function init() {
         [
             {
                 type: "input",
-                name: "logo text",
+                name: "text",
                 message: "Enter up to 3 characters for your logo:",
+                validate: function(value) {
+                    if (value.length <= 3) {
+                        return true;
+                    } else {
+                        return 'Text should be up to 3 characters.';
+                    }
+                }
             },
             {
                 type: "input",
-                name: "text color",
+                name: "textColor",
                 message: "Enter a color name for your logo text",
             },
             {
@@ -48,7 +59,7 @@ function init() {
             },
             {
                 type: "input",
-                name: "shape color",
+                name: "shapeColor",
                 message: "choose a color for your logo shape",
             },
         ])
