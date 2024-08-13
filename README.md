@@ -22,7 +22,7 @@ Use SVG docs to generate logos [SVG](https://developer.mozilla.org/en-US/docs/We
 [Video Demonstration](https://www.awesomescreenshot.com/video/30479075?key=772a9172283426c270b24354938ae8d1)
 
 ## Contributing
-Follow this link: [README Generator](github.com/MattAJ26/SVG-Logo-Maker)
+Follow this link: [SVG Logo Maker](github.com/MattAJ26/SVG-Logo-Maker)
 
 ## License
 
